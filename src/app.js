@@ -31,7 +31,8 @@ masterLoop(performance.now());
  */
 function update(elapsedTime) {
 
-  // TODO: Update the game objects
+    // TODO: Update the game objects
+
 }
 
 /**
