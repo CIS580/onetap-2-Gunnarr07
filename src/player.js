@@ -24,7 +24,7 @@ function Player(position) {
   var self = this;
   window.onmousedown = function (event) {
       if(self.state == "waiting"){
-          self.x = event.clientx
+          self.x = event.clientX;
           self.state = "walking";
       }
   }
@@ -53,7 +53,8 @@ Player.prototype.update = function (time) {
  * {CanvasRenderingContext2D} ctx the context to render into
  */
 Player.prototype.render = function (time, ctx) {
-  ctx.drawImage(
+    console.log(this.frame, this.width, this.height, this.x, this.y);
+    ctx.drawImage(
     // image
     this.spritesheet,
     // source rectangle
