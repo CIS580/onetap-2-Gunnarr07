@@ -24,7 +24,7 @@ function Giant(position) {
     var self = this;
     window.onmousedown = function (event) {
         if (self.state == "waiting") {
-            self.x = event.clientx
+            self.x = event.clientX
             self.state = walking;
         }
     }
