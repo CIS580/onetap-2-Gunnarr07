@@ -4,11 +4,13 @@
 /* Classes */
 const Game = require('./game.js');
 const Player = require('./player.js');
+const Giant = require('./giant.js');
 
 /* Global variables */
 var canvas = document.getElementById('screen');
 var game = new Game(canvas, update, render);
-var player = new Player({x: 382, y: 440})
+var player = new Player({ x: 382, y: 440 });
+var giant = new Giant({ x: 75, y: 133 });
 
 /**
  * @function masterLoop
@@ -32,6 +34,7 @@ masterLoop(performance.now());
  */
 function update(elapsedTime) {
     player.update(elapsedTime);
+    giant.update(elapsedTime);
     // TODO: Update the game objects
 
 }
@@ -47,9 +50,10 @@ function render(elapsedTime, ctx) {
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   player.render(elapsedTime, ctx);
+  giant.render(elapsedTime, ctx);
 }
 
-},{"./game.js":2,"./player.js":3}],2:[function(require,module,exports){
+},{"./game.js":2,"./giant.js":3,"./player.js":4}],2:[function(require,module,exports){
 "use strict";
 
 /**
@@ -108,6 +112,76 @@ Game.prototype.loop = function(newTime) {
 }
 
 },{}],3:[function(require,module,exports){
+"use strict";
+
+/**
+ * @module exports the Giant Monster class
+ */
+module.exports = exports = Giant;
+
+/**
+ * @constructor Giant
+ * Creates a new giant object
+ * @param {Postition} position object specifying an x and y
+ */
+function Giant(position) {
+    this.x = position.x;
+    this.y = position.y;
+    this.state = "throwing";
+    this.frame = 0;
+    this.timer = 0;
+    this.width = 32;
+    this.height = 32;
+    this.spritesheet = new Image();
+    this.spritesheet.src = encodeURI('assets/beasts/giant/giant throw.png');
+    //this.spritesheet.src = encodeURI('assets/link/not link/notlink up.png');
+
+    var self = this;
+    /*
+    window.onmousedown = function (event) {
+        if (self.state == "waiting") {
+            self.x = event.clientX
+            self.state = "throwing";
+        }
+    }
+    */
+}
+
+/**
+ * @function updates the player object
+ * {DOMHighResTimeStamp} time the elapsed time since the last frame
+ */
+Giant.prototype.update = function (time) {
+    this.timer += time;
+    switch (this.state) {
+        case "throwing":
+            if (this.timer > 1000 / 16) {
+                this.frame = (this.frame + 1) % 4;
+                this.timer = 0;
+            }
+            //this.y -= 1;
+            this.x += 1;
+            break;
+    }
+}
+
+/**
+ * @function renders the player into the provided context
+ * {DOMHighResTimeStamp} time the elapsed time since the last frame
+ * {CanvasRenderingContext2D} ctx the context to render into
+ */
+Giant.prototype.render = function (time, ctx) {
+    ctx.drawImage(
+      // image
+      this.spritesheet,
+      // source rectangle
+      this.frame * this.width, 0, this.width, this.height,
+      // destination rectangle
+      this.x, this.y, 2*this.width, 2*this.height
+    );
+}
+
+},{}],4:[function(require,module,exports){
 "use strict";
 
 /**

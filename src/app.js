@@ -3,11 +3,13 @@
 /* Classes */
 const Game = require('./game.js');
 const Player = require('./player.js');
+const Giant = require('./giant.js');
 
 /* Global variables */
 var canvas = document.getElementById('screen');
 var game = new Game(canvas, update, render);
-var player = new Player({x: 382, y: 440})
+var player = new Player({ x: 382, y: 440 });
+var giant = new Giant({ x: 75, y: 133 });
 
 /**
  * @function masterLoop
@@ -31,6 +33,7 @@ masterLoop(performance.now());
  */
 function update(elapsedTime) {
     player.update(elapsedTime);
+    giant.update(elapsedTime);
     // TODO: Update the game objects
 
 }
@@ -46,4 +49,5 @@ function render(elapsedTime, ctx) {
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   player.render(elapsedTime, ctx);
+  giant.render(elapsedTime, ctx);
 }
