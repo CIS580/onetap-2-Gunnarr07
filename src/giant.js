@@ -19,7 +19,7 @@ function Giant(position) {
     this.width = 16;
     this.height = 16;
     this.spritesheet = new Image();
-    this.spritesheet.src = encodeURI('assets/beasts/giant/giant walk.png');
+    this.spritesheet.src = encodeURI('assets/beasts/giant/giant throw.png');
 
     var self = this;
     window.onmousedown = function (event) {
@@ -34,10 +34,10 @@ function Giant(position) {
  * @function updates the player object
  * {DOMHighResTimeStamp} time the elapsed time since the last frame
  */
-Player.prototype.update = function (time) {
+Giant.prototype.update = function (time) {
     this.timer += time;
     switch (this.state) {
-        case "walking":
+        case "throwing":
             if (this.timer > 1000 / 16) {
                 this.frame = (this.frame + 1) % 4;
                 this.timer = 0;
